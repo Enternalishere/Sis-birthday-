@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Rinku 🎂</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }body {
+  background: linear-gradient(to bottom right, #ffb6c1, #ffe4e1);
+  overflow: hidden;
+  text-align: center;
+  color: #333;
+}
+
+.intro, .main {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom right, #ffb6c1, #ffe4e1);
+  transition: opacity 2s ease;
+}
+
+.intro {
+  font-size: 2rem;
+  color: #fff;
+  text-shadow: 0 0 10px #ff4081;
+  opacity: 1;
+}
+
+.main {
+  opacity: 0;
+}
+
+.photo {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin: 30px auto;
+  border: 5px solid white;
+  box-shadow: 0 0 20px #ff80ab;
+  background-image: url('https://i.pinimg.com/564x/0e/3f/89/0e3f89c2e7b17c44f7e15c902ac35d87.jpg');
+  background-size: cover;
+  background-position: center;
+  animation: photoZoom 3s ease-in-out infinite alternate;
+}
+
+@keyframes photoZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
+.message {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 20px auto;
+  color: #444;
+  background: #fff7fa;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(255, 128, 171, 0.5);
+  animation: fadeIn 2s ease forwards;
+}
+
+.quote {
+  margin-top: 20px;
+  font-style: italic;
+  color: #555;
+  animation: fadeIn 2s ease forwards;
+  animation-delay: 1s;
+  opacity: 0;
+}
+
+.signature {
+  margin-top: 20px;
+  font-weight: bold;
+  color: #ff4081;
+  animation: fadeIn 2s ease forwards;
+  animation-delay: 2s;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.balloon {
+  position: absolute;
+  width: 60px;
+  height: 80px;
+  border-radius: 50%;
+  background: pink;
+  animation: float 6s ease-in infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+audio {
+  display: none;
+}
+
+  </style>
+</head>
+<body>  <div class="intro">
+    <p>Hey Rinku… don’t panic 👀</p>
+    <p>It’s not a prank this time 😂</p>
+    <p>Just me… trying to be emotional for once 💖</p>
+  </div>  <div class="main">
+    <h1>🎉 Happy Birthday Rinku 🎂</h1>
+    <div class="photo"></div><div class="message">
+  <p>Happy Birthday to my funniest, cutest chaos — Rinku 💕 !</p>
+</div>
+
+<div class="quote">"Sisters like you make life sparkle a little extra ✨"</div>
+<div class="signature">— From Yash 💫</div>
+
+  </div><audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9b1a29b4d3.mp3?filename=happy-birthday-113219.mp3" autoplay loop></audio> <canvas id="confettiCanvas"></canvas>
+
+  <script>
+    const intro = document.querySelector('.intro');
+    const main = document.querySelector('.main');
+
+    // Transition after 10 seconds
+    setTimeout(() => {
+      intro.style.opacity = 0;
+      main.style.opacity = 1;
+    }, 10000);
+
+    // Balloon generator 🎈
+    function createBalloon() {
+      const balloon = document.createElement('div');
+      balloon.classList.add('balloon');
+      balloon.style.left = Math.random() * 100 + 'vw';
+      balloon.style.background = `hsl(${Math.random() * 360}, 70%, 70%)`;
+      balloon.style.animationDuration = Math.random() * 3 + 4 + 's';
+      document.body.appendChild(balloon);
+      setTimeout(() => balloon.remove(), 7000);
+    }
+    setInterval(createBalloon, 300);
+
+    // Confetti 🎊
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confetti = Array.from({ length: 200 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      r: Math.random() * 6 + 2,
+      d: Math.random() * 0.5 + 0.5,
+      color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+    }));
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confetti.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      });
+      updateConfetti();
+      requestAnimationFrame(drawConfetti);
+    }
+
+    function updateConfetti() {
+      confetti.forEach(p => {
+        p.y += p.d * 4;
+        if (p.y > canvas.height) {
+          p.y = -10;
+          p.x = Math.random() * canvas.width;
+        }
+      });
+    }
+    drawConfetti();
+
+    // Ensure music plays on first interaction if blocked
+    window.addEventListener('click', () => {
+      const music = document.getElementById('bgMusic');
+      music.play();
+    }, { once: true });
+  </script></body>
+</html>
